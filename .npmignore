@@ -1,0 +1,10 @@
+src/*
+test/*
+
+.gitignore
+deploy.sh
+nest-cli.json
+README.md
+template.yaml
+tsconfig*.json
+

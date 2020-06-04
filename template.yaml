@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  NestjsDynamodbExample
+
+  SAM Template for NestjsDynamodbExample
+
+Globals:
+  Api:
+    Cors:
+      AllowHeaders: "'*'"
+      AllowMethods: "'*'"
+      AllowOrigin: "'*'"
+  Function:
+    Runtime: nodejs12.x
+    Timeout: 30
+    MemorySize: 1024
+
+Resources:
+  NestjsDynamodbExampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/index.handler
+      Environment:
+        Variables:
+          NODE_ENV: production
+          DYNAMO_DB_TABLE_NAME_PREFIX: NestjsDynamodbExample
+      Policies:
+        - S3ReadPolicy:
+            BucketName: rialto-pipeline
+        - DynamoDBCrudPolicy:
+            TableName: !Ref NestjsDynamodbExampleUserTable
+      Events:
+        NestjsDynamodbExample:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+  NestjsDynamodbExampleUserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: username
+          AttributeType: S
+      KeySchema:
+        - AttributeName: username
+          KeyType: HASH
+      TableName: NestjsDynamodbExampleUser
+      BillingMode: PAY_PER_REQUEST
