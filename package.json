@@ -30,7 +30,7 @@
     "@nestjs/platform-express": "^6.10.14",
     "aws-lambda": "^1.0.5",
     "aws-serverless-express": "^3.3.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "date-fns": "^2.11.1",
